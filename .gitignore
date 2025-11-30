@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Buildozer
+.buildozer/
+bin/
+*.apk
+*.aab
+
+# Android
+*.keystore
+local.properties
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Output
+output/
+web_output/
+videos/
+background_videos/
+backgrounds/
+
+# Config
+app_config.json
+
+# FFmpeg (large files - 90MB+ each)
+ffmpeg/
+ffmpeg-*/
+ffmpeg.exe
+ffplay.exe
+ffprobe.exe
+*.exe
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Distribution
+dist/
+build/
+*.spec
+!buildozer.spec
+
+# Large video files
+*.mp4
+*.avi
+*.mov
+*.mkv
