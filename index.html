@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Video Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .ayah-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .arabic {
+            font-size: 24px;
+            text-align: right;
+            direction: rtl;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .translation {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .ayah-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .audio-player {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .info-box strong {
+            color: #1976d2;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📖 Quran Reader</h1>
+        <p class="subtitle">Read and listen to the Holy Quran with translations</p>
+
+        <div class="info-box">
+            <strong>📱 Simple & Fast:</strong> No installation needed! Select a Surah and language to read with audio.
+        </div>
+
+        <div class="form-group">
+            <label for="surah">Select Surah:</label>
+            <select id="surah">
+                <option value="1">1. Al-Fatihah (The Opening)</option>
+                <option value="2">2. Al-Baqarah (The Cow)</option>
+                <option value="3">3. Al-Imran (The Family of Imran)</option>
+                <option value="18">18. Al-Kahf (The Cave)</option>
+                <option value="36">36. Ya-Sin</option>
+                <option value="55">55. Ar-Rahman (The Most Merciful)</option>
+                <option value="67">67. Al-Mulk (The Kingdom)</option>
+                <option value="78">78. An-Naba (The News)</option>
+                <option value="112">112. Al-Ikhlas (The Sincerity)</option>
+                <option value="113">113. Al-Falaq (The Daybreak)</option>
+                <option value="114">114. An-Nas (Mankind)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="reciter">Select Reciter:</label>
+            <select id="reciter">
+                <option value="ar.alafasy">Mishary Alafasy</option>
+                <option value="ar.husary">Mahmoud Husary</option>
+                <option value="ar.minshawi">Mohamed Minshawi</option>
+                <option value="ar.abdulbasit">Abdul Basit</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="translation">Translation Language:</label>
+            <select id="translation">
+                <option value="en.sahih">English (Sahih International)</option>
+                <option value="fr.hamidullah">French</option>
+                <option value="ur.jalandhry">Urdu</option>
+                <option value="tr.diyanet">Turkish</option>
+                <option value="id.indonesian">Indonesian</option>
+                <option value="bn.bengali">Bengali</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="ayahFrom">From Ayah:</label>
+            <input type="number" id="ayahFrom" value="1" min="1">
+        </div>
+
+        <div class="form-group">
+            <label for="ayahTo">To Ayah:</label>
+            <input type="number" id="ayahTo" value="7" min="1">
+        </div>
+
+        <div class="button-group">
+            <button class="btn-primary" onclick="loadQuran()">📖 Load Quran</button>
+            <button class="btn-secondary" onclick="clearResult()">🔄 Clear</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function loadQuran() {
+            const surah = document.getElementById('surah').value;
+            const reciter = document.getElementById('reciter').value;
+            const translation = document.getElementById('translation').value;
+            const ayahFrom = parseInt(document.getElementById('ayahFrom').value);
+            const ayahTo = parseInt(document.getElementById('ayahTo').value);
+            const resultDiv = document.getElementById('result');
+
+            if (ayahFrom > ayahTo) {
+                alert('From Ayah must be less than or equal to To Ayah');
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="loading"><div class="spinner"></div>Loading Quran...</div>';
+            resultDiv.style.display = 'block';
+
+            try {
+                // Fetch Arabic with audio
+                const arabicUrl = `https://api.alquran.cloud/v1/surah/${surah}/${reciter}`;
+                const arabicResponse = await fetch(arabicUrl);
+                const arabicData = await arabicResponse.json();
+
+                // Fetch translation
+                const translationUrl = `https://api.alquran.cloud/v1/surah/${surah}/${translation}`;
+                const translationResponse = await fetch(translationUrl);
+                const translationData = await translationResponse.json();
+
+                if (arabicData.code !== 200 || translationData.code !== 200) {
+                    throw new Error('Failed to fetch Quran data');
+                }
+
+                let html = `<h2>Surah ${arabicData.data.englishName}</h2>`;
+                html += `<p style="color: #666; margin-bottom: 20px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>`;
+
+                const ayahs = arabicData.data.ayahs;
+                const translations = translationData.data.ayahs;
+
+                for (let i = ayahFrom - 1; i < Math.min(ayahTo, ayahs.length); i++) {
+                    const ayah = ayahs[i];
+                    const trans = translations[i];
+
+                    html += `
+                        <div class="ayah-card">
+                            <span class="ayah-number">Ayah ${ayah.numberInSurah}</span>
+                            <div class="arabic">${ayah.text}</div>
+                            <div class="translation">${trans.text}</div>
+                            ${ayah.audio ? `<audio controls class="audio-player" src="${ayah.audio}"></audio>` : ''}
+                        </div>
+                    `;
+                }
+
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div style="color: #d32f2f; padding: 20px; text-align: center;">
+                        <strong>Error:</strong> ${error.message}
+                        <br><br>
+                        Please check your internet connection and try again.
+                    </div>
+                `;
+            }
+        }
+
+        function clearResult() {
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        // Add more surahs dynamically
+        window.addEventListener('DOMContentLoaded', () => {
+            const surahSelect = document.getElementById('surah');
+            const surahs = [
+                {num: 1, name: "Al-Fatihah (The Opening)"},
+                {num: 2, name: "Al-Baqarah (The Cow)"},
+                {num: 3, name: "Al-Imran (The Family of Imran)"},
+                {num: 4, name: "An-Nisa (The Women)"},
+                {num: 5, name: "Al-Ma'idah (The Table)"},
+                {num: 6, name: "Al-An'am (The Cattle)"},
+                {num: 7, name: "Al-A'raf (The Heights)"},
+                {num: 8, name: "Al-Anfal (The Spoils of War)"},
+                {num: 9, name: "At-Tawbah (The Repentance)"},
+                {num: 10, name: "Yunus (Jonah)"},
+                {num: 11, name: "Hud"},
+                {num: 12, name: "Yusuf (Joseph)"},
+                {num: 18, name: "Al-Kahf (The Cave)"},
+                {num: 19, name: "Maryam (Mary)"},
+                {num: 20, name: "Ta-Ha"},
+                {num: 32, name: "As-Sajdah (The Prostration)"},
+                {num: 36, name: "Ya-Sin"},
+                {num: 44, name: "Ad-Dukhan (The Smoke)"},
+                {num: 48, name: "Al-Fath (The Victory)"},
+                {num: 55, name: "Ar-Rahman (The Most Merciful)"},
+                {num: 56, name: "Al-Waqi'ah (The Event)"},
+                {num: 67, name: "Al-Mulk (The Kingdom)"},
+                {num: 73, name: "Al-Muzzammil (The Wrapped)"},
+                {num: 78, name: "An-Naba (The News)"},
+                {num: 110, name: "An-Nasr (The Help)"},
+                {num: 111, name: "Al-Masad (The Palm Fiber)"},
+                {num: 112, name: "Al-Ikhlas (The Sincerity)"},
+                {num: 113, name: "Al-Falaq (The Daybreak)"},
+                {num: 114, name: "An-Nas (Mankind)"}
+            ];
+
+            surahSelect.innerHTML = '';
+            surahs.forEach(s => {
+                const option = document.createElement('option');
+                option.value = s.num;
+                option.textContent = `${s.num}. ${s.name}`;
+                surahSelect.appendChild(option);
+            });
+        });
+    </script>
+</body>
+</html>
