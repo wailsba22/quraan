@@ -1,6 +1,8 @@
-# Quran Video Generator - Android APK
+# Quran Web Reader
 
-This repository contains an automated system to build Android APK files for the Quran Video Generator app using GitHub Actions.
+**🌐 Live Website:** https://wailsba22.github.io/quraan/
+
+A simple, fast, and beautiful web app to read the Holy Quran with audio and translations.
 
 ## 🚀 Automatic APK Building
 
